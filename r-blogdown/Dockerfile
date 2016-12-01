@@ -1,4 +1,4 @@
-FROM c6prmk/r-base-dev
+FROM c6prmk/r-base-dev:ubuntu
 MAINTAINER Can Altıparmak <can6parmak@gmail.com>
 
 ## Install dependencies
