@@ -11,13 +11,13 @@ RUN useradd docker \
 	&& mkdir /home/docker \
 	&& chown docker:docker /home/docker \
 	&& addgroup docker staff \
+    && echo 'deb http://cran.rstudio.com/bin/linux/debian jessie-cran3/' >> /etc/apt/sources.list \
+        && apt-get update \
+	&& apt-get install -y locales -qq \
     && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
 	&& locale-gen en_US.utf8 \
 	&& /usr/sbin/update-locale LANG=en_US.UTF-8 \
-    && echo 'deb http://cran.rstudio.com/bin/linux/debian jessie-cran3/' >> /etc/apt/sources.list \
-        && apt-get update \
-	&& apt-get install -y --force-yes --no-install-recommends \
-		r-base-dev wget curl git \
+	&& apt-get install -y --force-yes --no-install-recommends r-base-dev curl git \
         && echo 'options(repos = list(CRAN = "http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site \
     && apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /usr/share/doc/* \
