@@ -1,17 +1,16 @@
-FROM c6prmk/r-base-dev
+FROM c6prmk/r-base-dev:debian
 MAINTAINER Can Altıparmak <can6parmak@gmail.com>
 
-## Install dependencies
+## Install blogdown, dependencies and cleanup
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
         pandoc pandoc-citeproc libxml2-dev libssl-dev libcurl4-openssl-dev && \
-    apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/*
-
-## Install blogdown and cleanup
-RUN R -q -e "install.packages('devtools'); \
+    R -q -e "install.packages('devtools'); \
              devtools::install_github('rstudio/blogdown'); \
              blogdown::install_hugo()" && \
-    rm -rf /tmp/* /usr/share/man/* /usr/share/groff/* /usr/share/info/* \
-        /usr/share/lintian/* /usr/share/linda/* /var/cache/man/*
+    apt-get clean && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /usr/share/doc/* \
+        /usr/share/man/* /usr/share/groff/* /usr/share/info/* \
+        /usr/share/lintian/* /usr/share/linda/* /var/cache/* /usr/share/R/doc/*
 
 CMD ["R"]
